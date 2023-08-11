@@ -1,11 +1,15 @@
+import "react-native-gesture-handler"
 import { StatusBar } from "react-native"
-import { Home } from "./src/screens/home/home_page"
+import { Routes } from "./src/routes"
+import AuthProvider from "./src/contexts/auth"
 
 export default function App() {
   return (
     <>
-      <Home />
-      <StatusBar style="auto" />
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+      <StatusBar />
     </>
   )
 }

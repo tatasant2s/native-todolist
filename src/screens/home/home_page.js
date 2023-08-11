@@ -1,29 +1,30 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import {
   Keyboard,
-  Pressable,
-  ScrollView,
   Text,
   TextInput,
   TouchableWithoutFeedback,
+  TouchableOpacity,
   View,
 } from "react-native"
 import { useFonts, PaytoneOne_400Regular } from "@expo-google-fonts/paytone-one"
+import { useNavigation } from "@react-navigation/native"
+import { AuthContext } from "../../contexts/auth"
 import { styles } from "./styles"
-import { Card } from "../../components/cardList/cardList"
-import { ExcluirList } from "../../components/excluirList/excluirList"
 
 export const Home = () => {
   const [tarefa, setTarefa] = useState("")
-  const [list, setList] = useState([])
+  const { list, setList } = useContext(AuthContext)
   const [isEditable, setIsEditable] = useState(false)
+  const navigation = useNavigation()
 
   function handleTarefa() {
     const newTarefa = {
       name: tarefa,
-      id: list,
+      id: list.length + 1,
     }
 
+    console.log(newTarefa)
     if (handleComparetion(newTarefa)) {
       if (handleVazio(newTarefa)) {
         setTarefa("")
@@ -54,16 +55,12 @@ export const Home = () => {
     }
   }
 
-  function handleDelete(index) {
-    setList((prevState) => prevState.filter((item, i) => i !== index))
-  }
-
-  function handleDeleteList(index) {
-    setList((prevState) => prevState.filter((item, i) => i === index))
-  }
-
   function handleUpdateState() {
     setIsEditable(!isEditable)
+  }
+
+  function openScreen() {
+    navigation.navigate("ListPage", { paramKey: list })
   }
 
   let [fontsLoaded] = useFonts({
@@ -84,18 +81,19 @@ export const Home = () => {
 
         <View style={styles.boxInput}>
           <TextInput
+            enterKeyHint="enter"
             onChangeText={setTarefa}
+            onContentSizeChange={handleUpdateState}
             ref={(nextTarefaInput) => (tarefaInputText = nextTarefaInput)}
             placeholder={
               isEditable ? "Insira uma Tarefa" : "Entrada Desabilitada"
             }
             style={styles.textInput}
-            onContentSizeChange={handleUpdateState}
           ></TextInput>
         </View>
 
         <View style={styles.viewTarefa}>
-          <Pressable
+          <TouchableOpacity
             style={[
               styles.addTarefa,
               {
@@ -106,27 +104,8 @@ export const Home = () => {
             onPress={handleTarefa}
           >
             <Text style={styles.textTarefa}> Criar Tarefa </Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
-
-        <ScrollView style={styles.scroll}>
-          <View style={styles.listItem}>
-            {list.map((item, index) => (
-              <Card
-                key={item.id}
-                id={index + 1}
-                name={item.name}
-                handleDelete={() => handleDelete(index)}
-              />
-            ))}
-          </View>
-
-          <View style={styles.bottonExc}>
-            {!!list.length && (
-              <ExcluirList handleDeleteList={() => handleDeleteList()} />
-            )}
-          </View>
-        </ScrollView>
       </View>
     </TouchableWithoutFeedback>
   )

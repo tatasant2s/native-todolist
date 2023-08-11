@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   },
 
   navBar: {
-    height: "10%",
+    height: 70,
     backgroundColor: "#3CB371",
     justifyContent: "center",
     alignItems: "center",
@@ -14,28 +14,28 @@ export const styles = StyleSheet.create({
 
   textNavBar: {
     fontFamily: "PaytoneOne_400Regular",
-    fontSize: 25,
+    fontSize: 24,
   },
 
   boxInput: {
-    marginTop: 150,
     alignItems: "center",
+    marginTop: 230,
   },
 
   textInput: {
     width: "80%",
     height: 55,
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 5,
+    padding: 15,
+    borderWidth: 1.5,
+    borderRadius: 8,
     borderColor: "#3CB371",
     fontFamily: "PaytoneOne_400Regular",
     fontSize: 16,
   },
 
   viewTarefa: {
-    marginTop: 15,
     alignItems: "center",
+    marginTop: 15,
   },
 
   addTarefa: {
@@ -54,10 +54,6 @@ export const styles = StyleSheet.create({
 
   scroll: {
     marginTop: 50,
-  },
-
-  listItem: {
-    alignItems: "center",
   },
 
   bottonExc: {

@@ -5,8 +5,16 @@ import Animated, {
   LightSpeedInLeft,
   LightSpeedOutRight,
 } from "react-native-reanimated"
+import { useContext } from "react"
+import { AuthContext } from "../../contexts/auth"
 
-export const Card = (props) => {
+export const Card = ({ id, name }) => {
+  const { handleDelete } = useContext(AuthContext)
+
+  function handleExcluir() {
+    handleDelete(id)
+  }
+
   return (
     <View style={styles.container}>
       <Animated.View
@@ -16,19 +24,12 @@ export const Card = (props) => {
         style={styles.card}
       >
         <TouchableOpacity>
-          <View>
-            <Text style={styles.text}>
-              {props.id} -  {props.name}
-            </Text>
-          </View>
+          <Text style={styles.text}>
+            {id} - {name}
+          </Text>
           <View style={styles.cardDelete}>
-            <TouchableOpacity onPress={props.handleDelete}>
-              <Feather
-                name="trash-2"
-                size={26}
-                color="#3CB371"
-                style={styles.delete}
-              />
+            <TouchableOpacity onPress={handleExcluir}>
+              <Feather name="trash-2" size={26} color="#3CB371" />
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -39,14 +40,14 @@ export const Card = (props) => {
 
 const styles = StyleSheet.create({
   container: {
-    width: "80%",
+    width: "90%",
   },
 
   card: {
     width: "100%",
-    marginBottom: 15,
-    borderWidth: 1,
-    borderRadius: 5,
+    marginTop: 20,
+    borderWidth: 1.5,
+    borderRadius: 8,
     borderColor: "#3CB371",
     padding: 10,
   },
